@@ -27,19 +27,18 @@ class TodoCubit extends Cubit<TodoData> {
       emit(
         TodoData(todo: _data, status: true),
       );
+    }
+    if (state.todo.length < 1) {
+      emit(
+        TodoData(todo: _data, status: true),
+      );
     } else {
-      if (state.todo.length < 1) {
-        emit(
-          TodoData(todo: _data, status: true),
-        );
-      } else {
-        emit(
-          TodoData(
-            todo: List.from(state.todo)..addAll(_data),
-            status: true,
-          ),
-        );
-      }
+      emit(
+        TodoData(
+          todo: List.from(state.todo)..addAll(_data),
+          status: true,
+        ),
+      );
     }
   }
 
