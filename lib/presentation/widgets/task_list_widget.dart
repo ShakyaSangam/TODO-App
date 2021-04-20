@@ -43,7 +43,7 @@ class _TaskListState extends State<TaskList> {
               );
             } else {
               return Center(
-                child: Text("empty list"),
+                child: Text("Empty Task"),
               );
             }
           },

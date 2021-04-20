@@ -19,7 +19,7 @@ class DetailScreen extends StatelessWidget {
               if (state.status) {
                 return Text(state.todo.length.toString());
               } else {
-                return Text("null");
+                return Text("Task Null");
               }
             },
           ),

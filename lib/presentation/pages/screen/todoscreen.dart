@@ -26,7 +26,7 @@ class TodoScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 14),
                       Text(
-                        "List",
+                        "Task",
                         style: TextStyle(color: Colors.white70, fontSize: 18),
                       ),
                     ],

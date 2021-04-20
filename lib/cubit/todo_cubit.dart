@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:todo/logic/models/todo_model.dart';
 import 'package:todo/logic/repository/repository.dart';
 
