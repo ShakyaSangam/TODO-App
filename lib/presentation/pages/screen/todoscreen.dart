@@ -12,6 +12,7 @@ class TodoScreen extends StatelessWidget {
           children: <Widget>[
             Column(
               children: <Widget>[
+                // * TASK BUTTON
                 TaskBtnWidget(),
                 Container(
                   padding: EdgeInsets.all(20),
@@ -30,6 +31,7 @@ class TodoScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                // * TASK LIST
                 TaskList(),
               ],
             ),
