@@ -1,6 +1,13 @@
 part of 'todo_cubit.dart';
 
-@immutable
-abstract class TodoState {}
+class TodoData {
+  final List<ToDo> todo;
+  final bool status;
+  final bool isadded;
 
-class TodoInitial extends TodoState {}
+  TodoData({
+    this.todo,
+    this.status,
+    this.isadded,
+  });
+}
