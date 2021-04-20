@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo/router/route.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   final AccessRouter _accessRouter = AccessRouter();

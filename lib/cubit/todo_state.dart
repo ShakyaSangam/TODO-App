@@ -1,6 +1,16 @@
 part of 'todo_cubit.dart';
 
-@immutable
-abstract class TodoState {}
+class TodoData extends Equatable {
+  final List<ToDo> todo;
+  final bool status;
+  final bool isadded;
 
-class TodoInitial extends TodoState {}
+  TodoData({
+    this.todo,
+    this.status,
+    this.isadded,
+  });
+
+  @override
+  List<Object> get props => [todo, status, isadded];
+}
