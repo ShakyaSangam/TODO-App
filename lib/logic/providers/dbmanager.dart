@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:todo/logic/models/todo_model.dart';
 
 class DbManager {
   Database _database;
@@ -30,14 +31,11 @@ class DbManager {
     return await _database.insert("list", todo.toMap());
   }
 
-  Future<List<ToDo>> display() async{
+  Future<List<ToDo>> display() async {
     await createdb();
     List<Map<String, dynamic>> map = await _database.query("list");
-    return List.generate(map.length, (int i){
-      return ToDo(
-        id: map[i]['id'],
-        title: map[i][titlefield]
-      );
+    return List.generate(map.length, (int i) {
+      return ToDo(id: map[i]['id'], title: map[i][titlefield]);
     });
   }
 
@@ -48,25 +46,15 @@ class DbManager {
 
   Future<int> updaterecord(ToDo todo) async {
     await createdb();
-    return await _database.update("list", todo.toMap(), where: "id = ?",  whereArgs: [todo.id]);
+    return await _database
+        .update("list", todo.toMap(), where: "id = ?", whereArgs: [todo.id]);
   }
 
-/// returns null ERROR result ???
-  Future<int> countRecord() async{
+  /// returns null ERROR result ???
+  Future<int> countRecord() async {
     // return Sqflite.firstIntValue(await _database.rawQuery("SELECT COUNT(id) FROM list"));
-    int count = Sqflite.firstIntValue(await _database.rawQuery("SELECT COUNT(id) FROM list"));
+    int count = Sqflite.firstIntValue(
+        await _database.rawQuery("SELECT COUNT(id) FROM list"));
     return count;
   }
-}
-
-class ToDo {
-  int id;
-  String title;
-
-  ToDo({this.id, @required this.title});
-
-  Map<String, dynamic> toMap() {
-    return {'title': this.title};
-  }
-
 }
