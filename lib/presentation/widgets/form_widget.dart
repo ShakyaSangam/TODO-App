@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:todo/logic/models/todo_model.dart';
-import 'package:todo/logic/repository/repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/cubit/todo_cubit.dart';
 
 // ignore: must_be_immutable
 class FormWidget extends StatelessWidget {
   final TextEditingController title = TextEditingController();
   var formkey = GlobalKey<FormState>();
-  ToDo todo;
-  final Repository _repository = Repository();
 
   _submitform(BuildContext context) {
     if (formkey.currentState.validate()) {
-      if (todo == null) {
-        ToDo td = ToDo(title: title.text);
-        _repository.insertRecord(td).then((id) {
-          title.clear();
-          print(" ID: $id");
-        });
-      }
+      // if (todo == null) {
+      // ToDo td = ToDo(title: title.text);
+      // * CUBIT
+      BlocProvider.of<TodoCubit>(context).insertTodo(title: title.text);
+
+      // _repository.insertRecord(td).then((id) {
+      title.clear();
+      //   print(" ID: $id");
+      // });
+      // }
     }
   }
 

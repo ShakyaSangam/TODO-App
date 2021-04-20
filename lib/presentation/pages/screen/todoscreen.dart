@@ -9,6 +9,7 @@ class TodoScreen extends StatelessWidget {
       backgroundColor: Colors.lightBlue,
       body: SafeArea(
         child: ListView(
+          shrinkWrap: true,
           children: <Widget>[
             Column(
               children: <Widget>[
