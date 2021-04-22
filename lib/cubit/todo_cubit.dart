@@ -25,34 +25,58 @@ class TodoCubit extends Cubit<TodoData> {
       ),
     ];
     if (state.todo == null) {
-      emit(
-        TodoData(todo: _data, status: true),
-      );
+      emit(state.copyWith(
+        _data,
+        true,
+      ));
     }
     if (state.todo.length < 1) {
-      emit(
-        TodoData(todo: _data, status: true),
-      );
+      emit(state.copyWith(
+        _data,
+        true,
+      ));
     } else {
-      emit(
-        TodoData(
-          todo: List.from(state.todo)..addAll(_data),
-          status: true,
-        ),
-      );
+      emit(state.copyWith(
+        List.from(state.todo)..addAll(_data),
+        true,
+      ));
     }
   }
 
   void fetchData() async {
     List<ToDo> list = await _repository.display();
     if (list.length > 0) {
-      emit(
-        TodoData(todo: list, status: true),
-      );
+      emit(state.copyWith(
+        list,
+        true,
+      ));
     } else {
-      emit(
-        TodoData(todo: [], status: false),
-      );
+      emit(state.copyWith(
+        [],
+        true,
+      ));
     }
+  }
+
+  // void deleteTask({ToDo toDo}) async {
+  //   TodoData todoData = state;
+  //   print("state before deleting: ${todoData.todo.length}");
+  //   todoData.todo.removeWhere((item) => item.id == toDo.id);
+  //   print("state after deleting: ${todoData.todo.length}");
+
+  //   //  release offline delete feature
+  //   // * await _repository.deleterecord(todo.id);
+  //   emit(todoData);
+  // }
+
+  void deleteTask({ToDo toDo}) async {
+    print("state before deleting: ${state.todo.length}");
+    List<ToDo> todo = state.todo;
+
+    todo.removeWhere((item) => item.id == toDo.id);
+    print("state after deleting: ${state.todo.length}");
+
+    // * await _repository.deleterecord(todo.id);
+    emit(TodoData().copyWith(todo, true));
   }
 }

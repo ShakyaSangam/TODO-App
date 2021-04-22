@@ -2,19 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/cubit/todo_cubit.dart';
 import 'package:todo/logic/models/todo_model.dart';
-import 'package:todo/logic/repository/repository.dart';
 
-class TaskList extends StatefulWidget {
-  @override
-  _TaskListState createState() => _TaskListState();
-}
-
-class _TaskListState extends State<TaskList> {
-  Repository _repository = Repository();
-  TextEditingController title = TextEditingController();
+class TaskList extends StatelessWidget {
   var formkey = GlobalKey<FormState>();
-  // List<ToDo> todolist = [];
-  List<ToDo> todolist = [];
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +18,25 @@ class _TaskListState extends State<TaskList> {
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: EdgeInsets.all(20),
-        child: BlocBuilder<TodoCubit, TodoData>(
-          builder: (BuildContext context, TodoData state) {
+        child: BlocConsumer<TodoCubit, TodoData>(
+          listener: (ctx, state) {},
+          // buildWhen: (TodoData previousState, TodoData currentState) {
+          //   if (previousState.todo.length != currentState.todo.length) {
+          //     print(previousState.todo.length);
+          //     print(currentState.todo.length);
+          //     return true;
+          //   }
+          //   print(previousState.todo.length);
+          //   print(currentState.todo.length);
+          //   return false;
+          // },
+          builder: (BuildContext ctx, TodoData state) {
             if (state.status) {
-              todolist = state.todo;
-              print(todolist.length);
               return ListView.builder(
                 shrinkWrap: true,
-                itemCount: todolist.length,
+                itemCount: state.todo.length,
                 itemBuilder: (BuildContext context, int index) {
-                  ToDo td = todolist[index];
-                  return buildTaskCard(td, index);
+                  return buildTaskCard(state.todo[index], state, ctx);
                 },
               );
             } else {
@@ -52,7 +50,7 @@ class _TaskListState extends State<TaskList> {
     );
   }
 
-  Column buildTaskCard(ToDo td, int index) {
+  Column buildTaskCard(ToDo td, TodoData state, BuildContext context) {
     return Column(
       children: <Widget>[
         Padding(
@@ -74,10 +72,12 @@ class _TaskListState extends State<TaskList> {
                   ),
                   IconButton(
                     onPressed: () {
-                      _repository.deleterecord(td.id);
-                      setState(() {
-                        todolist.removeAt(index);
-                      });
+                      // context.watch<TodoCubit>().deleteTask(todo: td);
+                      BlocProvider.of<TodoCubit>(context).deleteTask(toDo: td);
+                      // _repository.deleterecord(td.id);
+                      // setState(() {
+                      //   todolist.removeAt(index);
+                      // });
                     },
                     icon: Icon(
                       Icons.delete,
